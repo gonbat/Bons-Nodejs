@@ -1,67 +1,58 @@
 let cards = [
   {
-    id: 0,
     name: "attack",
-    effect: { damage: 15, description: "15 damage to opponent" },
+    effect: { damage: 21, message: "21 damage to opponent" },
   },
   {
-    id: 0,
     name: "attack",
-    effect: { damage: 18, description: "18 damage to opponent" },
+    effect: { damage: 24, message: "24 damage to opponent" },
   },
   {
-    id: 0,
     name: "attack",
-    effect: { damage: 20, description: "20 damage to opponent" },
+    effect: { damage: 20, message: "20 damage to opponent" },
   },
   {
-    id: 0,
     name: "attack",
-    effect: { damage: 10, description: "10 damage to opponent" },
+    effect: { damage: 10, message: "15 damage to opponent" },
   },
   {
-    id: 0,
     name: "attack",
-    effect: { damage: 13, description: "13 damage to opponent" },
+    effect: { damage: 13, message: "18 damage to opponent" },
   },
   {
-    id: 1,
     name: "defense",
-    effect: { heal: 15, description: "15 heal for you" },
+    effect: { heal: 15, message: "15 heal for you" },
   },
   {
-    id: 1,
     name: "defense",
-    effect: { heal: 11, description: "11 heal for you" },
+    effect: { heal: 11, message: "11 heal for you" },
   },
   {
-    id: 1,
     name: "defense",
-    effect: { heal: 10, description: "10 heal for you" },
+    effect: { heal: 10, message: "10 heal for you" },
   },
   {
-    id: 1,
     name: "defense",
-    effect: { heal: 16, description: "16 heal for you" },
+    effect: { heal: 16, message: "16 heal for you" },
   },
   {
-    id: 2,
     name: "shield",
-    effect: { shield: 12, description: "12 armor for you" },
+    effect: { shield: 12, message: "6 shield for you" },
   },
   {
-    id: 2,
     name: "shield",
-    effect: { shield: 20, description: "10 armor for you" },
+    effect: { shield: 20, message: "8 shield for you" },
   },
   {
-    id: 2,
     name: "shield",
-    effect: { shield: 18, description: "18 armor for you" },
+    effect: { shield: 18, message: "10 shield for you" },
   },
   {
-    id: 3,
     name: "horror",
-    effect: { horror: 0, description: "YOU LOSE YOUR TOURN!" },
+    effect: { horror: 0, message: "YOU LOSE YOUR TOURN!" },
   },
 ];
+
+module.exports = {
+  cards,
+};

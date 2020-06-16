@@ -5,13 +5,13 @@ class Card {
 }
 
 async function getCard() {
-  let cards = require("../dataBase/data");
-  let randomCard = cards[randomCard(cards.length)];
-  return new Card(randomCard.name, randomCard.effect);
+  const cardsDb = require("../dataBase/data");
+  let cardSelect = cardsDb.cards[randomCard(cardsDb.cards.length)];
+  return new Card(cardSelect.name, cardSelect.effect);
 }
 
-async function randomCard(length) {
-  return Math.floor(Math.random * length);
+function randomCard(length) {
+  return Math.floor(Math.random() * length);
 }
 
 module.exports = {

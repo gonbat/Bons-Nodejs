@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 app.use(routes);
 app.use((req, res, next) => {
-  res.status(404).send("We think you are lost!");
+  res.status(404).send({ code: "notFound", message: "We think you are lost!" });
 });
 
 app.use((err, req, res, next) => {

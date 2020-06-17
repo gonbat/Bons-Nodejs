@@ -12,10 +12,12 @@ class Player {
 let playerCards = require("./cards");
 
 const players = [];
+
 async function createPlayer(body, type) {
-  if (!body.name) [{ code: "noName", message: "Send a name" }];
-  let newPlayer = new Player(body.name, type, await getHand());
+  if (!body) [{ code: "noName", message: "Send a name" }];
+  let newPlayer = new Player(body, type, await getHand());
   players.push(newPlayer);
+  console.log(players);
   return players;
 }
 
@@ -65,8 +67,9 @@ async function playTurn(body) {
 
   if (player.status === "Normal") {
     const newCard = await drawCard();
-    player.cards.push(newCard);
     const choiceCard = await playCard(player.cards, body.index);
+    player.cards.splice(body.index, 1);
+    player.cards.splice(body.index, 0, newCard);
     await useEffect(choiceCard, player, enemy);
     playerTurn.playedCard = choiceCard;
   } else {
@@ -78,10 +81,8 @@ async function playTurn(body) {
 }
 
 async function playCard(hand, selectedCard) {
-  if (typeof selectedCard !== "number")
-    selectedCard = getRandomInt(0, hand.length);
+  if (!selectedCard) selectedCard = randomCard(hand.length);
   const cardToUse = hand[selectedCard];
-  hand.splice(selectedCard, 1);
   return cardToUse;
 }
 
@@ -109,7 +110,7 @@ async function useEffect(card, player, enemy) {
   }
 }
 
-function getRandomInt(length) {
+function randomCard(length) {
   return Math.floor(Math.random() * length);
 }
 

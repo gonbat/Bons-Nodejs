@@ -5,8 +5,8 @@ class Card {
 }
 
 async function getCard() {
-  const cardsDb = require("../dataBase/data");
-  let cardSelect = cardsDb.cards[randomCard(cardsDb.cards.length)];
+  const dataBase = require("../dataBase/data");
+  let cardSelect = dataBase.cards[randomCard(dataBase.cards.length)];
   return new Card(cardSelect.name, cardSelect.effect);
 }
 

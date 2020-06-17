@@ -4,8 +4,14 @@ class Game {
     this.turnsLeft = turns;
     this.turnsPast = 0;
     this.turnCurrent = 1;
-    this.hero = hero;
     this.monster = monster;
+    this.hero = hero;
+  }
+
+  turn() {
+    this.turnCurrent++;
+    this.turnsLeft--;
+    this.turnsPast++;
   }
 
   getGame() {
@@ -22,12 +28,6 @@ class Game {
     };
     return actualGame;
   }
-
-  turn() {
-    this.turnCurrent++;
-    this.turnsLeft--;
-    this.turnsPast++;
-  }
 }
 let newGame;
 async function createGame(body) {
@@ -36,11 +36,11 @@ async function createGame(body) {
     errors.push({ code: "noTurns", message: " Turns is required" });
   if (body.turns > 12)
     errors.push({ code: "turnsMax", message: "Turns cannot be more than 12 " });
-  if (!body.hero)
+  if (!body.name)
     errors.push({ code: "noPlayer", message: "Player is required" });
   if (errors.length) return errors;
   const players = require("./players"),
-    hero = await players.createPlayer(body.hero, "hero"),
+    hero = await players.createPlayer(body.name, "hero"),
     monster = await players.createPlayer("Monster", "monster");
   newGame = new Game(body.turns, hero, monster);
   return newGame.getGame();

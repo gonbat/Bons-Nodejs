@@ -29,5 +29,5 @@ Node.js Challenge
 > # Players Cards
 
 - **Method: GET**
-- **Route:/playerscards**
+- **Route:/players/cards**
 - **No Parameters**: Return to you the cards of monster and hero.

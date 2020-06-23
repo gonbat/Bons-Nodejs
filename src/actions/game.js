@@ -29,6 +29,7 @@ class Game {
     return actualGame;
   }
 }
+const players = require("./players");
 let newGame;
 async function createGame(body) {
   const errors = [];
@@ -39,9 +40,12 @@ async function createGame(body) {
   if (!body.name)
     errors.push({ code: "noPlayer", message: "Player is required" });
   if (errors.length) return errors;
-  const players = require("./players"),
-    hero = await players.createPlayer(body.name, "hero"),
-    monster = await players.createPlayer("Monster", "monster");
+
+  const [hero, monster] = await Promise.all([
+    players.createPlayer(body.name, "hero"),
+    players.createPlayer("Monster", "monster"),
+  ]);
+
   newGame = new Game(body.turns, hero, monster);
   return newGame.getGame();
 }
@@ -56,7 +60,6 @@ async function nextTurn(body) {
     return { code: "youLose", message: "UPS.. YOU LOSE! :(" };
   }
   newGame.turn();
-  const players = require("./players");
 
   const turn = await players.playTurn(body);
 

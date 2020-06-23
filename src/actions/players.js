@@ -17,7 +17,6 @@ async function createPlayer(body, type) {
   if (!body) [{ code: "noName", message: "Send a name" }];
   let newPlayer = new Player(body, type, await getHand());
   players.push(newPlayer);
-  console.log(players);
   return players;
 }
 
@@ -59,19 +58,27 @@ async function playTurn(body) {
     typePlayer.type = "monster";
     typeEnemy.type = "hero";
   }
-  const player = await getPlayer(typePlayer),
-    enemy = await getPlayer(typeEnemy),
-    playerTurn = {
-      player: player.name,
-    };
+
+  const [player, enemy] = await Promise.all([
+    getPlayer(typePlayer),
+    getPlayer(typeEnemy),
+  ]);
+
+  playerTurn = {
+    player: player.name,
+  };
 
   if (player.status === "Normal") {
-    const newCard = await drawCard();
-    const choiceCard = await playCard(player.cards, body.index);
-    player.cards.splice(body.index, 1);
-    player.cards.splice(body.index, 0, newCard);
-    await useEffect(choiceCard, player, enemy);
-    playerTurn.playedCard = choiceCard;
+    const [newCard, choiceCard] = await Promise.all([
+      drawCard(),
+      playCard(player.cards, body.index),
+    ]);
+    player.cards.splice(choiceCard.index, 1);
+    player.cards.splice(choiceCard.index, 0, newCard);
+
+    await useEffect(choiceCard.card, player, enemy);
+
+    playerTurn.playedCard = choiceCard.card;
   } else {
     playerTurn.status = "You lost your turn. You are horrified!!";
     player.status = "Normal";
@@ -81,9 +88,9 @@ async function playTurn(body) {
 }
 
 async function playCard(hand, selectedCard) {
-  if (!selectedCard) selectedCard = randomCard(hand.length);
-  const cardToUse = hand[selectedCard];
-  return cardToUse;
+  if (!selectedCard) selectedCard = await randomCard(hand.length);
+  const card = hand[selectedCard];
+  return { card: card, index: selectedCard };
 }
 
 async function useEffect(card, player, enemy) {

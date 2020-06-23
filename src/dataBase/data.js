@@ -1,11 +1,11 @@
 let cards = [
   {
     name: "attack",
-    effect: { damage: 21, message: "21 damage to opponent" },
+    effect: { damage: 35, message: "35 damage to opponent" },
   },
   {
     name: "attack",
-    effect: { damage: 24, message: "24 damage to opponent" },
+    effect: { damage: 25, message: "25 damage to opponent" },
   },
   {
     name: "attack",
@@ -13,11 +13,15 @@ let cards = [
   },
   {
     name: "attack",
-    effect: { damage: 10, message: "15 damage to opponent" },
+    effect: { damage: 30, message: "30 damage to opponent" },
   },
   {
     name: "attack",
-    effect: { damage: 13, message: "18 damage to opponent" },
+    effect: { damage: 50, message: "50 damage to opponent" },
+  },
+  {
+    name: "defense",
+    effect: { heal: 20, message: "20 heal for you" },
   },
   {
     name: "defense",
@@ -25,27 +29,23 @@ let cards = [
   },
   {
     name: "defense",
-    effect: { heal: 11, message: "11 heal for you" },
-  },
-  {
-    name: "defense",
     effect: { heal: 10, message: "10 heal for you" },
   },
   {
     name: "defense",
-    effect: { heal: 16, message: "16 heal for you" },
+    effect: { heal: 25, message: "25 heal for you" },
   },
   {
     name: "shield",
-    effect: { shield: 12, message: "6 shield for you" },
+    effect: { shield: 12, message: "12 shield for you" },
   },
   {
     name: "shield",
-    effect: { shield: 20, message: "8 shield for you" },
+    effect: { shield: 20, message: "20 shield for you" },
   },
   {
     name: "shield",
-    effect: { shield: 18, message: "10 shield for you" },
+    effect: { shield: 18, message: "18 shield for you" },
   },
   {
     name: "horror",

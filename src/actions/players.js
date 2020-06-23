@@ -4,7 +4,6 @@ class Player {
     this.shield = 0;
     this.name = name;
     this.type = type;
-    this.status = "Normal";
     this.cards = cards;
   }
 }
@@ -54,7 +53,7 @@ async function drawCard() {
 async function playTurn(body) {
   const typePlayer = { type: "hero" },
     typeEnemy = { type: "monster" };
-  if (!body.index) {
+  if (!body.index && body.index !== 0) {
     typePlayer.type = "monster";
     typeEnemy.type = "hero";
   }
@@ -63,32 +62,28 @@ async function playTurn(body) {
     getPlayer(typePlayer),
     getPlayer(typeEnemy),
   ]);
-
   playerTurn = {
     player: player.name,
   };
 
-  if (player.status === "Normal") {
-    const [newCard, choiceCard] = await Promise.all([
-      drawCard(),
-      playCard(player.cards, body.index),
-    ]);
-    player.cards.splice(choiceCard.index, 1);
-    player.cards.splice(choiceCard.index, 0, newCard);
+  const [newCard, choiceCard] = await Promise.all([
+    drawCard(),
+    playCard(player.cards, body.index),
+  ]);
+  player.cards.splice(choiceCard.index, 1);
+  player.cards.splice(choiceCard.index, 0, newCard);
 
-    await useEffect(choiceCard.card, player, enemy);
+  await useEffect(choiceCard.card, player, enemy);
 
-    playerTurn.playedCard = choiceCard.card;
-  } else {
-    playerTurn.status = "You lost your turn. You are horrified!!";
-    player.status = "Normal";
-  }
+  playerTurn.playedCard = choiceCard.card;
 
   return playerTurn;
 }
 
 async function playCard(hand, selectedCard) {
-  if (!selectedCard) selectedCard = await randomCard(hand.length);
+  if (typeof selectedCard !== "number") {
+    selectedCard = await randomCard(hand.length);
+  }
   const card = hand[selectedCard];
   return { card: card, index: selectedCard };
 }
@@ -111,9 +106,6 @@ async function useEffect(card, player, enemy) {
     } else {
       enemy.hp = enemy.hp - card.effect.damage;
     }
-  }
-  if (Object.keys(card.effect)[0] === "horror") {
-    enemy.status = "Horror";
   }
 }
 

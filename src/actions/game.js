@@ -38,15 +38,14 @@ async function createGame(body) {
   if (body.turns > 12)
     errors.push({ code: "turnsMax", message: "Turns cannot be more than 12 " });
   if (!body.name)
-    errors.push({ code: "noPlayer", message: "Player is required" });
+    errors.push({ code: "noName", message: "Player name is required" });
   if (errors.length) return errors;
 
   const [hero, monster] = await Promise.all([
     players.createPlayer(body.name, "hero"),
     players.createPlayer("Monster", "monster"),
   ]);
-
-  newGame = new Game(body.turns, hero, monster);
+  newGame = new Game(body.turns, hero[0], monster[1]);
   return newGame.getGame();
 }
 
